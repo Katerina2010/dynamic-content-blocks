@@ -1,0 +1,126 @@
+<h2 #heading class="step__title" tabindex="-1" [id]="titleId()">Оплата</h2>
+@if (facade.selection(); as selection) {
+  <p class="step__context">
+    {{ selection.product.name }}, тариф «{{ selection.tariff.title }}»: {{ selection.priceLabel }}
+  </p>
+}
+
+<div class="demo" role="note">
+  <strong>Демонстрационная форма. Не вводите данные настоящей банковской карты.</strong>
+  Принимаются только тестовые номера ниже; деньги не списываются, данные никуда не отправляются и не
+  сохраняются.
+  <span class="demo__cards">
+    Тестовые карты:
+    @for (card of facade.demoCards; track card.number) {
+      <span class="demo__card"
+        ><code>{{ card.number }}</code> — {{ card.label }}</span
+      >
+    }
+  </span>
+</div>
+
+<form class="form" novalidate [formGroup]="form" (submit)="submit($event)">
+  <fieldset class="form__fields" [disabled]="facade.isSubmitting()">
+    <legend class="visually-hidden">Данные для оплаты</legend>
+
+    <div class="field">
+      <label for="pay-email">E-mail</label>
+      <input
+        id="pay-email"
+        type="email"
+        autocomplete="email"
+        formControlName="email"
+        [attr.aria-invalid]="showError('email')"
+        [attr.aria-describedby]="showError('email') ? 'pay-email-error' : null"
+      />
+      @if (showError('email')) {
+        <span id="pay-email-error" class="field__error">Введите корректный e-mail</span>
+      }
+    </div>
+
+    <div class="field">
+      <label for="pay-card">Номер тестовой карты</label>
+      <input
+        #cardInput
+        id="pay-card"
+        inputmode="numeric"
+        autocomplete="off"
+        placeholder="4242 4242 4242 4242"
+        formControlName="cardNumber"
+        (input)="mask($event, 'cardNumber')"
+        [attr.aria-invalid]="showError('cardNumber')"
+        [attr.aria-describedby]="
+          showError('cardNumber') ? 'pay-card-hint pay-card-error' : 'pay-card-hint'
+        "
+      />
+      <span id="pay-card-hint" class="field__hint">Только номера из списка тестовых карт</span>
+      @if (showError('cardNumber')) {
+        <span id="pay-card-error" class="field__error">{{ cardMessage() }}</span>
+      }
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="pay-expiry">Срок действия</label>
+        <input
+          id="pay-expiry"
+          inputmode="numeric"
+          autocomplete="off"
+          placeholder="ММ/ГГ"
+          formControlName="expiry"
+          (input)="mask($event, 'expiry')"
+          [attr.aria-invalid]="showError('expiry')"
+          [attr.aria-describedby]="showError('expiry') ? 'pay-expiry-error' : null"
+        />
+        @if (showError('expiry')) {
+          <span id="pay-expiry-error" class="field__error">{{ expiryMessage() }}</span>
+        }
+      </div>
+      <div class="field">
+        <label for="pay-cvc">CVC</label>
+        <input
+          id="pay-cvc"
+          inputmode="numeric"
+          autocomplete="off"
+          formControlName="cvc"
+          (input)="mask($event, 'cvc')"
+          [attr.aria-invalid]="showError('cvc')"
+          [attr.aria-describedby]="showError('cvc') ? 'pay-cvc-error' : null"
+        />
+        @if (showError('cvc')) {
+          <span id="pay-cvc-error" class="field__error">CVC — ровно 3 цифры</span>
+        }
+      </div>
+    </div>
+  </fieldset>
+
+  @if (failureMessage(); as message) {
+    <p class="step__alert" role="alert">{{ message }}</p>
+  }
+
+  @if (!formValid()) {
+    <p id="pay-submit-hint" class="step__note">
+      Кнопка оплаты станет доступна, когда все поля заполнены верно.
+    </p>
+  }
+
+  <div class="step__actions">
+    <button
+      type="submit"
+      class="btn btn--primary btn--grow"
+      [disabled]="!canPay()"
+      [attr.aria-busy]="facade.isSubmitting()"
+      [attr.aria-describedby]="formValid() ? null : 'pay-submit-hint'"
+    >
+      {{ submitLabel() }}
+    </button>
+    <button
+      type="button"
+      class="btn btn--ghost"
+      [disabled]="facade.isSubmitting()"
+      (click)="back()"
+    >
+      Другой тариф
+    </button>
+  </div>
+</form>

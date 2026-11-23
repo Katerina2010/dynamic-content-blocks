@@ -1,0 +1,49 @@
+.modal {
+  width: min(560px, calc(100vw - 24px));
+  max-height: calc(100dvh - 24px);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-l);
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 24px 64px rgb(0 0 0 / 25%);
+  overflow: auto;
+  overscroll-behavior: contain;
+
+  &::backdrop {
+    background: rgb(17 17 17 / 60%);
+  }
+}
+
+.modal__panel {
+  position: relative;
+  padding: var(--space-6) var(--space-5) var(--space-5);
+
+  @media (min-width: 600px) {
+    padding: var(--space-7) var(--space-6) var(--space-6);
+  }
+}
+
+.modal__close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: var(--color-muted-surface);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+}

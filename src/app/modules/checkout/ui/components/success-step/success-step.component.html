@@ -1,0 +1,29 @@
+<div class="success__icon" aria-hidden="true">✓</div>
+<h2 #heading class="step__title" tabindex="-1" [id]="titleId()">Подписка оформлена</h2>
+
+@if (facade.selection(); as selection) {
+  <p class="step__context">
+    {{ selection.product.name }}, тариф «{{ selection.tariff.title }}»: {{ selection.priceLabel }}
+  </p>
+  <ul class="success__features">
+    @for (feature of selection.tariff.features; track feature) {
+      <li>{{ feature }}</li>
+    }
+  </ul>
+}
+
+@if (persisted()) {
+  <p class="step__note">
+    Демо: покупка сохранена в этом браузере и переживёт перезагрузку страницы. В системе The Bell
+    подписка не создавалась.
+  </p>
+} @else {
+  <p class="step__alert" role="alert">
+    Не удалось сохранить покупку: хранилище браузера недоступно. Доступ действует только до
+    перезагрузки страницы.
+  </p>
+}
+
+<div class="step__actions">
+  <button type="button" class="btn btn--primary btn--block" (click)="done()">Готово</button>
+</div>

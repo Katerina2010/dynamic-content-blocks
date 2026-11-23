@@ -1,0 +1,23 @@
+@let state = facade.state();
+@if (state.step !== 'closed') {
+  <app-modal-shell
+    [labelledBy]="titleId"
+    [dismissible]="!facade.isSubmitting()"
+    (dismissed)="close()"
+  >
+    @switch (state.step) {
+      @case ('tariffs') {
+        <app-tariff-step [titleId]="titleId" />
+      }
+      @case ('payment') {
+        <app-payment-step [titleId]="titleId" />
+      }
+      @case ('redirect') {
+        <app-redirect-step [titleId]="titleId" />
+      }
+      @case ('success') {
+        <app-success-step [titleId]="titleId" [persisted]="state.persisted" />
+      }
+    }
+  </app-modal-shell>
+}

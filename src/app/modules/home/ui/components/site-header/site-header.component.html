@@ -1,0 +1,18 @@
+<header class="header">
+  <div class="header__inner container">
+    <p class="header__logo">The Bell</p>
+    <nav class="header__nav" aria-label="Разделы">
+      <ul>
+        @for (link of nav; track link.href) {
+          <li>
+            <a [href]="link.href" target="_blank" rel="noopener">{{ link.label }}</a>
+          </li>
+        }
+      </ul>
+    </nav>
+  </div>
+  <p class="header__demo">
+    Независимый прототип блоков для конструктора главной The Bell. Как проходит оплата —
+    демонстрационно или на официальном сайте The Bell, — указано в окне оформления.
+  </p>
+</header>

@@ -1,0 +1,47 @@
+{
+  "name": "dynamic-content-blocks",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "lint": "eslint \"src/**/*.{ts,html}\"",
+    "format": "prettier --write \"src/**/*.{ts,html,scss}\" \"*.md\" \"docs/**/*.md\"",
+    "format:check": "prettier --check \"src/**/*.{ts,html,scss}\" \"*.md\" \"docs/**/*.md\"",
+    "typecheck": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.spec.json --noEmit",
+    "arch": "depcruise src --config .dependency-cruiser.cjs",
+    "test:ci": "ng test --watch=false",
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm run arch && npm run test:ci && npm run build"
+  },
+  "private": true,
+  "packageManager": "npm@11.12.1",
+  "engines": {
+    "node": "^24.15.0"
+  },
+  "dependencies": {
+    "@angular/common": "^22.3.0",
+    "@angular/compiler": "^22.3.0",
+    "@angular/core": "^22.3.0",
+    "@angular/forms": "^22.3.0",
+    "@angular/platform-browser": "^22.3.0",
+    "@angular/router": "^22.3.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^22.3.0",
+    "@angular/cli": "^22.3.0",
+    "@angular/compiler-cli": "^22.3.0",
+    "@eslint/js": "^10.0.1",
+    "angular-eslint": "^22.8.0",
+    "dependency-cruiser": "^18.8.0",
+    "eslint": "^10.15.0",
+    "jsdom": "^31.0.0",
+    "prettier": "^3.8.1",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.73.0",
+    "vitest": "^5.0.0"
+  }
+}

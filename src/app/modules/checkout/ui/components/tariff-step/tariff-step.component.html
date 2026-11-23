@@ -1,0 +1,70 @@
+<h2 #heading class="step__title" tabindex="-1" [id]="titleId()">Выберите тариф</h2>
+<p class="step__context">{{ facade.heading() }}</p>
+
+@if (facade.subscriberNote(); as note) {
+  <p class="step__note">{{ note }}</p>
+}
+
+@if (facade.excludedTrialNote(); as note) {
+  <p class="step__note">{{ note }}</p>
+}
+
+<form (submit)="submit($event)">
+  @if (facade.options().length > 0) {
+    <fieldset class="options">
+      <legend class="visually-hidden">Тарифы</legend>
+      @for (option of facade.options(); track option.tariff.id) {
+        <label class="option" [class.option--disabled]="option.unavailableReason !== null">
+          <input
+            class="option__radio"
+            [attr.aria-labelledby]="'tariff-option-' + option.tariff.id"
+            type="radio"
+            name="tariff"
+            [value]="option.tariff.id"
+            [disabled]="option.unavailableReason !== null"
+            [checked]="selectedId() === option.tariff.id"
+            (change)="select(option.tariff.id)"
+          />
+          <span class="option__body" [id]="'tariff-option-' + option.tariff.id">
+            @if (showProductNames()) {
+              <span class="option__product">{{ option.product.name }}</span>
+            }
+            <span class="option__title">{{ option.tariff.title }}</span>
+            <span class="option__price">{{ option.priceLabel }}</span>
+            <span class="option__features">{{ option.tariff.features.join(' · ') }}</span>
+            @if (option.unavailableReason) {
+              <span class="option__reason">{{ option.unavailableReason }}</span>
+            } @else if (option.includedNote) {
+              <span class="option__reason">{{ option.includedNote }}</span>
+            }
+          </span>
+        </label>
+      }
+    </fieldset>
+  } @else {
+    <p class="step__alert">Сейчас нет тарифов, которые дают этот доступ.</p>
+  }
+
+  @if (showSelectionHint()) {
+    <p class="step__alert" role="alert">Выберите тариф, чтобы перейти к оплате.</p>
+  }
+
+  @if (error(); as message) {
+    <p class="step__alert" role="alert">{{ message }}</p>
+  }
+
+  @if (facade.hasAvailableOption()) {
+    <div class="step__actions">
+      <button type="submit" class="btn btn--primary btn--block">Перейти к оплате</button>
+    </div>
+  } @else {
+    @if (facade.options().length > 0) {
+      <p class="step__note" role="status">
+        Нет доступных для оформления тарифов. Причина указана у каждого тарифа выше.
+      </p>
+    }
+    <div class="step__actions">
+      <button type="button" class="btn btn--secondary btn--block" (click)="close()">Закрыть</button>
+    </div>
+  }
+</form>

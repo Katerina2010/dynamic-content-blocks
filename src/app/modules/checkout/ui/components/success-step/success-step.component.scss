@@ -1,0 +1,17 @@
+.success__icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--space-3);
+  border-radius: 50%;
+  background: var(--color-success);
+  color: #fff;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.success__features {
+  margin: 0 0 var(--space-3);
+  padding-left: 1.1em;
+}

@@ -1,0 +1,47 @@
+@let c = card();
+<!-- data-focus-return: если CTA исчезает после покупки, фокус возвращается на статус. -->
+<article class="feature" data-focus-return [class]="'feature--' + c.series">
+  <div class="feature__art" aria-hidden="true"></div>
+
+  <div class="feature__chips">
+    <span class="feature__series">{{ c.seriesLabel }}</span>
+    <span class="feature__status" [class]="'feature__status feature__status--' + c.status">{{
+      c.statusLabel
+    }}</span>
+  </div>
+
+  <div class="feature__body">
+    <p class="feature__date">{{ c.dateLabel }}</p>
+    <h3 class="feature__title">{{ c.title }}</h3>
+    <p class="feature__speakers">
+      <span class="visually-hidden">Спикеры: </span>{{ speakerNames() }}
+    </p>
+    @if (c.recordingNote) {
+      <p class="feature__recording">{{ c.recordingNote }}</p>
+    }
+
+    <div class="feature__action">
+      @switch (c.cta.kind) {
+        @case ('request-access') {
+          <button type="button" class="btn btn--primary" (click)="accessRequested.emit(c.id)">
+            {{ c.cta.label }}
+          </button>
+        }
+        @case ('external') {
+          <a class="btn btn--light" [href]="c.cta.url" target="_blank" rel="noopener">
+            {{ c.cta.label }}
+          </a>
+        }
+        @case ('granted') {
+          <p class="feature__granted" tabindex="-1" data-focus-return-target>{{ c.cta.note }}</p>
+        }
+        @case ('none') {
+          <p class="feature__note" tabindex="-1" data-focus-return-target>{{ c.cta.note }}</p>
+        }
+      }
+      <a class="feature__source" [href]="c.sourceUrl" target="_blank" rel="noopener">
+        Страница события
+      </a>
+    </div>
+  </div>
+</article>

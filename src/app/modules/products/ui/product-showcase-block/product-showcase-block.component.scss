@@ -1,0 +1,89 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+// Компактная редакторская карточка: подробности и тарифы — в модальном окне checkout.
+.showcase {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.showcase__cover {
+  position: relative;
+
+  app-product-mark {
+    --mark-min-height: 104px;
+  }
+}
+
+.showcase__badge {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  margin: 0;
+  padding: 2px 6px;
+  background: #fff;
+  color: var(--color-text);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.showcase__body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4) var(--space-4);
+}
+
+.showcase__eyebrow {
+  margin: 0;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.showcase__title {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.showcase__tagline {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.showcase__offer,
+.showcase__owned {
+  margin: auto 0 0;
+  padding-top: var(--space-1);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.showcase__owned {
+  color: var(--color-success);
+
+  &::before {
+    content: '✓ ';
+  }
+}
+
+.showcase__source {
+  align-self: center;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}

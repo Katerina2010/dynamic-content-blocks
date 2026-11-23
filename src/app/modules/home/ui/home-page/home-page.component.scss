@@ -1,0 +1,45 @@
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5) var(--space-4);
+  padding: var(--space-5) 0 var(--space-7);
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-5) var(--space-4);
+  }
+}
+
+.grid__cell {
+  min-width: 0;
+}
+
+// Планшет: половины и трети сохраняют ширину, текстовые заголовки идут по два в ряд.
+@media (min-width: 768px) {
+  .grid__cell--full {
+    grid-column: span 12;
+  }
+
+  .grid__cell--half,
+  .grid__cell--quarter {
+    grid-column: span 6;
+  }
+
+  .grid__cell--third {
+    grid-column: span 4;
+  }
+}
+
+// Десктоп: четыре текстовых заголовка в ряд.
+@media (min-width: 1024px) {
+  .grid__cell--quarter {
+    grid-column: span 3;
+  }
+}
+
+.footer {
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--color-border);
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}

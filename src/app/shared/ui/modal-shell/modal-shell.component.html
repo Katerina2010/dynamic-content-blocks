@@ -1,0 +1,24 @@
+<!-- Клик по оверлею — удобство для мыши; с клавиатуры окно закрывают Esc или кнопкой закрытия. -->
+<!-- eslint-disable-next-line @angular-eslint/template/click-events-have-key-events, @angular-eslint/template/interactive-supports-focus -->
+<dialog
+  #dialog
+  class="modal"
+  aria-modal="true"
+  [attr.aria-labelledby]="labelledBy()"
+  (cancel)="onCancel($event)"
+  (close)="onNativeClose()"
+  (click)="onDialogClick($event)"
+>
+  <div class="modal__panel">
+    <button
+      type="button"
+      class="modal__close"
+      [attr.aria-label]="closeLabel()"
+      [disabled]="!dismissible()"
+      (click)="requestDismiss()"
+    >
+      <span aria-hidden="true">×</span>
+    </button>
+    <ng-content />
+  </div>
+</dialog>

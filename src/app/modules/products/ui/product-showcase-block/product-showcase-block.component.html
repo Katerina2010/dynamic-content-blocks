@@ -1,0 +1,29 @@
+@if (view(); as v) {
+  <section class="showcase" [attr.aria-labelledby]="headingId()">
+    <div class="showcase__cover">
+      <app-product-mark [productId]="v.product.id" [label]="v.product.mark" />
+      <p class="showcase__badge">{{ v.badge }}</p>
+    </div>
+
+    <div class="showcase__body">
+      <p class="showcase__eyebrow">Подписка The Bell</p>
+      <h2 class="showcase__title" [id]="headingId()">{{ v.product.name }}</h2>
+      <p class="showcase__tagline">{{ v.product.tagline }}</p>
+
+      @if (v.owned) {
+        <p class="showcase__owned">{{ v.ownedLabel }}</p>
+      } @else if (v.includedLabel) {
+        <p class="showcase__owned">{{ v.includedLabel }}</p>
+      } @else if (v.offer) {
+        <p class="showcase__offer">{{ v.offer }}</p>
+      }
+
+      <button type="button" class="btn btn--primary btn--block" (click)="subscribe(v.product.id)">
+        {{ v.ctaLabel }}
+      </button>
+      <a class="showcase__source" [href]="v.product.sourceUrl" target="_blank" rel="noopener">
+        Условия на сайте The Bell
+      </a>
+    </div>
+  </section>
+}

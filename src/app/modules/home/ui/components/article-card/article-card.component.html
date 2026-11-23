@@ -1,0 +1,29 @@
+@let a = article();
+@if (emphasis() === 'text') {
+  <article class="text">
+    <h2 class="text__title">
+      <a class="text__link" [href]="a.url" target="_blank" rel="noopener"
+        >{{ a.title }}<span class="visually-hidden"> (откроется в новой вкладке)</span></a
+      >
+    </h2>
+    <p class="text__date">{{ a.dateLabel }}</p>
+  </article>
+} @else {
+  <article
+    class="cover"
+    [class.cover--hero]="emphasis() === 'hero'"
+    [class]="'cover--tone-' + tone()"
+  >
+    <div class="cover__art" aria-hidden="true"></div>
+    <p class="cover__rubric">{{ a.rubric }}</p>
+    <div class="cover__body">
+      <!-- Ссылка покрывает всю карточку (::after), но даёт одну остановку Tab — на заголовке. -->
+      <h2 class="cover__title">
+        <a class="cover__link" [href]="a.url" target="_blank" rel="noopener"
+          >{{ a.title }}<span class="visually-hidden"> (откроется в новой вкладке)</span></a
+        >
+      </h2>
+      <p class="cover__date">{{ a.dateLabel }}</p>
+    </div>
+  </article>
+}

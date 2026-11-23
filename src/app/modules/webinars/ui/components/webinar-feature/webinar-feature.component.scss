@@ -1,0 +1,143 @@
+:host {
+  display: block;
+  height: 100%;
+  // Применима ли обложка 16:10, решает ширина самой карточки, а не окна браузера.
+  container-type: inline-size;
+}
+
+.feature {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  min-height: 300px;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  color: #fff;
+  background: #1d1d1f;
+}
+
+// Если карточка уже 480px, пропорция 16:10 даёт меньше минимальных 300px, поэтому пропорция
+// никогда не задаёт высоту карточки, а лишь мешала ей расти. Не поместившееся содержимое
+// выталкивалось вверх (flex-end) под абсолютно позиционированные плашки и обрезалось,
+// начиная с даты. Здесь карточка вместо этого растёт вместе с содержимым.
+@container (width < 480px) {
+  .feature {
+    aspect-ratio: auto;
+  }
+}
+
+// Сгенерированная обложка в цветах серии; фотографии не используются.
+.feature__art {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgb(0 0 0 / 0%) 20%, rgb(0 0 0 / 70%) 100%),
+    radial-gradient(
+      circle at 82% 22%,
+      transparent 0 16%,
+      rgb(255 255 255 / 14%) 16% 21%,
+      transparent 21%
+    ),
+    var(--feature-base);
+}
+
+.feature--the-bell-tech {
+  --feature-base: linear-gradient(135deg, #0f2a5c 0%, #2a5bd7 100%);
+}
+
+.feature--the-chat {
+  --feature-base: linear-gradient(135deg, #1d1d1f 0%, #4b3a5e 100%);
+}
+
+.feature__chips {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  right: var(--space-3);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.feature__series,
+.feature__status {
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.feature__series {
+  background: #fff;
+  color: var(--color-text);
+}
+
+.feature__status--upcoming,
+.feature__status--started {
+  background: var(--color-accent-hover);
+  color: #fff;
+}
+
+.feature__status--past {
+  background: rgb(255 255 255 / 85%);
+  color: var(--color-text);
+}
+
+.feature__body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-7) var(--space-4) var(--space-4);
+}
+
+.feature__date {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.feature__title {
+  margin: 0;
+  font-size: clamp(20px, 2.1vw, 26px);
+  line-height: 1.2;
+}
+
+.feature__speakers,
+.feature__recording {
+  margin: 0;
+  font-size: 14px;
+  color: rgb(255 255 255 / 85%);
+}
+
+.feature__action {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.feature__granted,
+.feature__note {
+  margin: 0;
+  font-weight: 600;
+}
+
+.feature__granted::before {
+  content: '✓ ';
+}
+
+.feature__source {
+  font-size: 13px;
+  color: rgb(255 255 255 / 85%);
+}
+
+.btn--light {
+  background: #fff;
+  color: var(--color-text);
+}

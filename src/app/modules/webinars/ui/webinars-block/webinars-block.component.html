@@ -1,0 +1,24 @@
+@if (cards().length > 0) {
+  @if (presentation() === 'feature') {
+    <section class="webinars-feature" [attr.aria-labelledby]="headingId()">
+      <h2 class="visually-hidden" [id]="headingId()">{{ title() }}</h2>
+      @for (card of cards(); track card.id) {
+        <app-webinar-feature [card]="card" (accessRequested)="requestAccess($event)" />
+      }
+    </section>
+  } @else {
+    <section class="webinars" [attr.aria-labelledby]="headingId()">
+      <header class="webinars__header">
+        <h2 class="webinars__title" [id]="headingId()">{{ title() }}</h2>
+        <p class="webinars__lead">Ближайшие и прошедшие встречи с экспертами</p>
+      </header>
+      <ul class="webinars__list">
+        @for (card of cards(); track card.id) {
+          <li>
+            <app-webinar-card [card]="card" (accessRequested)="requestAccess($event)" />
+          </li>
+        }
+      </ul>
+    </section>
+  }
+}

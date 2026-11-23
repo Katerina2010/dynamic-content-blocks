@@ -1,0 +1,51 @@
+@let c = card();
+<!-- data-focus-return: если CTA исчезает после покупки, фокус возвращается на статус. -->
+<article class="card" data-focus-return [class.card--past]="c.status === 'past'">
+  <div class="card__meta">
+    <span class="card__series">{{ c.seriesLabel }}</span>
+    <span class="card__status" [class]="'card__status card__status--' + c.status">{{
+      c.statusLabel
+    }}</span>
+  </div>
+
+  <p class="card__date">{{ c.dateLabel }}</p>
+  <h3 class="card__title">{{ c.title }}</h3>
+
+  <ul class="card__speakers" aria-label="Спикеры">
+    @for (speaker of c.speakers; track speaker.name) {
+      <li>
+        <strong>{{ speaker.name }}</strong>, {{ speaker.role }}
+      </li>
+    }
+  </ul>
+
+  @if (c.recordingNote) {
+    <p class="card__recording">{{ c.recordingNote }}</p>
+  }
+
+  <div class="card__action">
+    @switch (c.cta.kind) {
+      @case ('request-access') {
+        <button
+          type="button"
+          class="btn btn--primary btn--small"
+          (click)="accessRequested.emit(c.id)"
+        >
+          {{ c.cta.label }}
+        </button>
+      }
+      @case ('external') {
+        <a class="card__link" [href]="c.cta.url" target="_blank" rel="noopener">
+          {{ c.cta.label }} <span aria-hidden="true">→</span>
+        </a>
+      }
+      @case ('granted') {
+        <p class="card__granted" tabindex="-1" data-focus-return-target>{{ c.cta.note }}</p>
+      }
+      @case ('none') {
+        <p class="card__note" tabindex="-1" data-focus-return-target>{{ c.cta.note }}</p>
+      }
+    }
+    <a class="card__source" [href]="c.sourceUrl" target="_blank" rel="noopener">Страница события</a>
+  </div>
+</article>

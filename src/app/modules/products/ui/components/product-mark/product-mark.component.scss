@@ -1,0 +1,58 @@
+:host {
+  display: block;
+}
+
+.mark {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2px;
+  min-height: var(--mark-min-height, 112px);
+  padding: var(--space-4);
+  color: #fff;
+  background: #111;
+  overflow: hidden;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 18px solid rgb(255 255 255 / 14%);
+  }
+}
+
+.mark--news {
+  background: linear-gradient(135deg, #1b1b1b 0%, #3a3a3a 100%);
+}
+
+.mark--tech {
+  background: linear-gradient(135deg, #0f2a5c 0%, #2a5bd7 100%);
+}
+
+.mark--invest {
+  background: linear-gradient(135deg, #0d3b2e 0%, #1f8a5b 100%);
+}
+
+.mark--unlimited {
+  background: linear-gradient(135deg, #8f1d14 0%, var(--color-accent) 100%);
+}
+
+.mark__brand {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.mark__label {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}

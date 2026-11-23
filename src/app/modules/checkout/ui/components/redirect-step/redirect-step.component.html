@@ -1,0 +1,46 @@
+<h2 #heading class="step__title" tabindex="-1" [id]="titleId()">Оплата на сайте The Bell</h2>
+@if (facade.selection(); as selection) {
+  <p class="step__context">{{ selection.product.name }}, тариф «{{ selection.tariff.title }}»</p>
+
+  @if (checkout(); as official) {
+    <dl class="prices">
+      <div class="prices__row">
+        <dt>В нашем каталоге</dt>
+        <dd>{{ selection.priceLabel }}</dd>
+      </div>
+      <div class="prices__row">
+        <dt>На странице оплаты The Bell</dt>
+        <dd>{{ official.priceOnCheckout }}</dd>
+      </div>
+    </dl>
+    @if (official.termsOnCheckout; as terms) {
+      <p class="terms">{{ terms }}</p>
+    }
+    <p class="step__note">
+      Оплата и доступ оформляются на thebell.io, это настоящая оплата. Итоговую сумму покажет
+      страница оплаты. Этот прототип не узнает результат и не отметит подписку как оформленную.
+    </p>
+    <div class="step__actions">
+      <a class="btn btn--primary btn--grow" [href]="official.url" target="_blank" rel="noopener">
+        Перейти к оплате на thebell.io
+      </a>
+      <button type="button" class="btn btn--ghost" (click)="back()">Другой тариф</button>
+    </div>
+  } @else {
+    <p class="step__alert" role="status">
+      Ссылка на официальную оплату этого тарифа пока не подтверждена, поэтому оформить его отсюда
+      нельзя. Выберите тариф на сайте The Bell.
+    </p>
+    <div class="step__actions">
+      <a
+        class="btn btn--secondary btn--grow"
+        [href]="selection.product.sourceUrl"
+        target="_blank"
+        rel="noopener"
+      >
+        Страница продукта на сайте The Bell
+      </a>
+      <button type="button" class="btn btn--ghost" (click)="back()">Другой тариф</button>
+    </div>
+  }
+}

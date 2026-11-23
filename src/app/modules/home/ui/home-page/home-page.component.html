@@ -1,0 +1,39 @@
+<app-site-header />
+
+<main class="container">
+  <h1 class="visually-hidden">The Bell — деловые новости и аналитика</h1>
+  <div class="grid">
+    @for (item of items; track item.id) {
+      <div class="grid__cell" [class]="['grid__cell--' + item.span, 'grid__cell--' + item.kind]">
+        @switch (item.kind) {
+          @case ('article') {
+            <app-article-card [article]="item.article" [emphasis]="item.emphasis" />
+          }
+          @case ('product-showcase') {
+            <app-product-showcase-block
+              [blockId]="item.id"
+              [settings]="item.settings"
+              [rotationExclude]="item.rotationExclude"
+            />
+          }
+          @case ('webinar-showcase') {
+            <app-webinars-block
+              [blockId]="item.id"
+              [title]="item.title"
+              [presentation]="item.presentation"
+              [settings]="item.settings"
+            />
+          }
+        }
+      </div>
+    }
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    Независимый демонстрационный прототип, не сайт The Bell. Данные о продуктах, тарифах и вебинарах
+    взяты с публичных страниц thebell.io, subscription.thebell.io, webinar.thebell.io и the-chat.io
+    22 ноября 2026.
+  </div>
+</footer>
